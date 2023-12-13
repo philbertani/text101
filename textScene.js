@@ -1,3 +1,5 @@
+//this file is mostly useless - was just for initial testing
+
 import * as THREE from "three";
 
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
