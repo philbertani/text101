@@ -30,9 +30,16 @@ export class letterDie {
       const letter = this.chooseLetter();
       console.log('xxxxxxxx',letter, alphabet3d[letter]);
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
+      letter3d.geometry.computeBoundingBox();
+      const bb = letter3d.geometry.boundingBox;
+      const [dx,dy,dz] = [-.5*(bb.max.x-bb.min.x), -.5*(bb.max.y-bb.min.y),  -.5*(bb.max.z-bb.min.z)];
+      
+      const sc=120;
+      letter3d.position.set( sc*faceCenter[0]+dx,sc*faceCenter[1]+dy,sc*faceCenter[2]+dz);
 
-      const sc=100;
-      letter3d.position.set( sc*faceCenter[0],sc*faceCenter[1],sc*faceCenter[2]);
+      const dir = new THREE.Vector3( faceCenter[0], faceCenter[1], faceCenter[2]).normalize();
+      //letter3d.lookAt( dir );
+
       group.add(letter3d);
     }
 

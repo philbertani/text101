@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+
+//all threejs renderer initialization and lighting setup go in here
+
 class GPU {
 
     renderer;  scene; camera; controls;
@@ -33,7 +36,7 @@ class GPU {
       this.canvas = canvas;
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(70, width / height, 0.1, 3000);
-      this.camera.position.set(0,400,700);
+      this.camera.position.set(0,0,500);
       
   
       //this.controls = new THREE.
@@ -42,12 +45,12 @@ class GPU {
       this.controls.maxDistance = 10000;
       this.controls.zoomSpeed = 1;
 
-      this.mainLight = new THREE.DirectionalLight(0xFFFFFF, .3)
+      this.mainLight = new THREE.DirectionalLight(0xFFFFFF, .5)
       this.mainLight.position.set(0,1,1).normalize();
       this.setShadow(this.mainLight)
       this.scene.add(this.mainLight)
 
-      this.cameraLight = new THREE.PointLight(0xFFFFFF,.6)
+      this.cameraLight = new THREE.PointLight(0xFFFFFF,1)
       this.setShadow(this.cameraLight)
       this.camera.add(this.cameraLight)
       this.scene.add(this.camera)
@@ -78,10 +81,10 @@ class GPU {
       //have to set the range of the orthographic shadow camera
       //to cover the whole plane we are casting shadows onto
       //the shadows get fuzzier if these limits are much greater than the scene
-      light.shadow.camera.left = -20;
-      light.shadow.camera.bottom = -20;
-      light.shadow.camera.right = 20;
-      light.shadow.camera.top = 20;
+      light.shadow.camera.left = -1000;
+      light.shadow.camera.bottom = -1000;
+      light.shadow.camera.right = 1000;
+      light.shadow.camera.top = 1000;
     }
 
     render(groups) {

@@ -47,22 +47,19 @@ export class createAlphabet3d {
       bevelSegments: 10,
     });
 
-    textGeo.computeBoundingBox();
-    const centerOffset =
-      -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
-  
+
     const material = new THREE.MeshPhongMaterial({
       color: "rgb(255,200,0)",
       shininess: 100,
     });
   
     const textMesh = new THREE.Mesh(textGeo, material);
-  
-    textMesh.position.x = centerOffset;
-    textMesh.position.y = 30;
-    textMesh.position.z = 0;
-    textMesh.rotation.x = 0;
-    textMesh.rotation.y = Math.PI * 2;
+
+    //a bunch of boxes is centered - the letters are not
+    //const textMesh = new THREE.Mesh( new THREE.BoxGeometry(100,100,100), material);
+
+    textMesh.receiveShadow = true;
+    textMesh.cashShadow = true;
 
     return textMesh;
      
