@@ -50,7 +50,7 @@ class GPU {
       this.setShadow(this.mainLight)
       this.scene.add(this.mainLight)
 
-      this.cameraLight = new THREE.PointLight(0xFFA0FF,.6)
+      this.cameraLight = new THREE.PointLight(0xFFFF00,.8)
       this.setShadow(this.cameraLight)
       this.camera.add(this.cameraLight)
       this.scene.add(this.camera)
