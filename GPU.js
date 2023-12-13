@@ -89,7 +89,7 @@ class GPU {
       //groups is an array of threejs groups or objects
       //whose parameters we will animate
 
-      console.log("render",this.scene);
+      //console.log("render",this.scene);
 
       let prevRenderTime = Date.now();
       const fps = 20;

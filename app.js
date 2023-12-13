@@ -4,8 +4,12 @@ import { d12 } from "./d12.js";
 import { loadFont } from "./loadFont.js";
 import { alphabetData } from "./alphabetData.js";
 import { createAlphabet3d } from "./createAlphabet3d.js";
+import { letterDie} from "./letterDie.js";
 
 class App {
+
+  letters;
+
   constructor() {
     console.log("apparently the document is loaded");
     this.canvas = document.getElementById("canvas");
@@ -24,14 +28,17 @@ class App {
 
   async sceneGraph() {
 
+    const {scene} = this.gpu;
+
     //use promises if a func is loading stuff from urls/filesytem
     this.font = await loadFont(this.typeFace);
 
-    const alphabet3d = new createAlphabet3d(this);  //send the app reference 
+    this.alphabet3d = new createAlphabet3d(this);  //send the app reference 
 
     //const group1 = textScene(this.gpu.scene,this.font3d);
+    const letterDie1 = new letterDie(this);
 
-    this.gpu.scene.add( alphabet3d['A'] );
+    scene.add( letterDie1 );
 
     //now we can be sure everything has loaded before we kick off the render
     this.gpu.render();
