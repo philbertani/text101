@@ -56,10 +56,8 @@ export class createAlphabet3d {
     const textMesh = new THREE.Mesh(textGeo, material);
 
     //a bunch of boxes is centered - the letters are not
+    //center them after cloning
     //const textMesh = new THREE.Mesh( new THREE.BoxGeometry(100,100,100), material);
-
-    textMesh.receiveShadow = true;
-    textMesh.cashShadow = true;
 
     return textMesh;
      

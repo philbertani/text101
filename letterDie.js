@@ -37,6 +37,9 @@ export class letterDie {
       const sc=120;
       letter3d.position.set( sc*faceCenter[0]+dx,sc*faceCenter[1]+dy,sc*faceCenter[2]+dz);
 
+      letter3d.castShadow = true;
+      letter3d.receiveShadow = true;
+      
       const dir = new THREE.Vector3( faceCenter[0], faceCenter[1], faceCenter[2]).normalize();
       //letter3d.lookAt( dir );
 

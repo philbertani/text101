@@ -45,12 +45,12 @@ class GPU {
       this.controls.maxDistance = 10000;
       this.controls.zoomSpeed = 1;
 
-      this.mainLight = new THREE.DirectionalLight(0xFFFFFF, .5)
-      this.mainLight.position.set(0,1,1).normalize();
+      this.mainLight = new THREE.DirectionalLight(0xFFFFFF, .8)
+      this.mainLight.position.set(1,1,0).normalize();
       this.setShadow(this.mainLight)
       this.scene.add(this.mainLight)
 
-      this.cameraLight = new THREE.PointLight(0xFFFFFF,1)
+      this.cameraLight = new THREE.PointLight(0xFFA0FF,.6)
       this.setShadow(this.cameraLight)
       this.camera.add(this.cameraLight)
       this.scene.add(this.camera)
