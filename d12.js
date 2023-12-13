@@ -1,9 +1,10 @@
+import { GeometryStuff } from "./GeometryStuff";
 
 //an amazing reference for computing stuff for d12 is:
 //https://math.stackexchange.com/questions/2538897/equations-of-facelets-of-dodecahedron
 //the person wrote a FORTRAN program to solve the 5 cycles of the adjaceny graph!!
 
-export class d12 {
+export class d12 extends GeometryStuff {
 
   //20 vertices
   vertices = [
@@ -48,9 +49,11 @@ export class d12 {
   N = 5;  //number of vertices in one face
   D = 3;  //number of dimensions
   constructor() {
+    super();
     this.computeFaceCenters();  
   }
 
+  /*
   computeFaceCenters() {
 
     const {N,D,faces,vertices} = this;  //i get tired of typing "this"
@@ -77,4 +80,6 @@ export class d12 {
     faceCenters.map(x=>console.log(x));
 
   }
+  */
+ 
 }

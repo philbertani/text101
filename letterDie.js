@@ -28,7 +28,7 @@ export class letterDie {
     for (let i=0; i<faceCenters.length; i++) {
       const faceCenter = faceCenters[i];
       const letter = this.chooseLetter();
-      console.log('xxxxxxxx',letter, alphabet3d[letter]);
+      //console.log('xxxxxxxx',letter, alphabet3d[letter]);
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
       letter3d.geometry.computeBoundingBox();
       const bb = letter3d.geometry.boundingBox;

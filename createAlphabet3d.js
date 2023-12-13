@@ -13,7 +13,7 @@ export class createAlphabet3d {
   constructor(app) {
 
     this.app = app;  //app has letters and font properties where font is now the 3d typeface read in
-    console.log('xxxxxxxxxx',this.app);
+    //console.log('xxxxxxxxxx',this.app);
 
     return this.constructVertexModels();
 
@@ -32,7 +32,7 @@ export class createAlphabet3d {
 
   create3dLetter(letter) {
 
-    console.log('createing 3d model for:',letter);
+    //console.log('createing 3d model for:',letter);
 
     const {font} = this.app;
     const textGeo = new TextGeometry(letter, {
