@@ -1,52 +1,81 @@
 import * as THREE from "three";
 
 export class letterDie {
-
-  constructor(app) {
+  constructor(app, polyhedron) {
     this.app = app;
-    console.log('zzzzzzzzzzz',app);
-    return this.pasteLettersOnPolyhedron(this.app.d12);
+    console.log("zzzzzzzzzzz", app);
+    return this.pasteLettersOnPolyhedron(polyhedron);
   }
 
-  chooseLetter( ) {
+  chooseLetter() {
     //input is a map whose keys are the letters
-    const {letters} = this.app; //maybe have option to pass in a group of letters?
-    const rnd = Math.trunc(Math.random()*letters.length);
+    const { letters } = this.app; //maybe have option to pass in a group of letters?
+    const rnd = Math.trunc(Math.random() * letters.length);
     return letters[rnd];
   }
 
+  *nextLetter(index) {
+    const letters = ["A", "B", "C", "D", "E", "F"];
+    while (index < 1e6) {
+      if (index > 5) index = 0;
+      yield letters[index];
+      index++;
+    }
+  }
   pasteLettersOnPolyhedron(polyhedron) {
-
     //polyhedron model is passed in which needs to have: faceCenters property
     //app should provide a function: chooseLetters which determines which letters to paste
     //alphabet3d is an array of mesh objects that are the 3d vertex models of letters
     const group = new THREE.Group();
 
-    const {faceCenters} = polyhedron;
-    const {alphabet3d} = this.app;
+    const { faceCenters } = polyhedron;
+    const { alphabet3d } = this.app;
 
-    for (let i=0; i<faceCenters.length; i++) {
+    const UP = new THREE.Vector3(0, 1, 0);
+
+    const sc = 150;  //scale factor
+    //watch out material needs to be cloned separately
+    const newLetter = this.nextLetter(0);
+    for (let i = 0; i < faceCenters.length; i++) {
       const faceCenter = faceCenters[i];
-      const letter = this.chooseLetter();
-      //console.log('xxxxxxxx',letter, alphabet3d[letter]);
+      const letter = newLetter.next().value;
+      //console.log("xxxxxxx", letter);
+
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
       letter3d.geometry.computeBoundingBox();
       const bb = letter3d.geometry.boundingBox;
-      const [dx,dy,dz] = [-.5*(bb.max.x-bb.min.x), -.5*(bb.max.y-bb.min.y),  -.5*(bb.max.z-bb.min.z)];
+      const [dx, dy, dz] =
+        [
+          -0.5 * (bb.max.x - bb.min.x),
+          -0.5 * (bb.max.y - bb.min.y),
+          -0.5 * (bb.max.z - bb.min.z)
+        ];
       
-      const sc=120;
-      letter3d.position.set( sc*faceCenter[0]+dx,sc*faceCenter[1]+dy,sc*faceCenter[2]+dz);
 
-      letter3d.castShadow = true;
-      letter3d.receiveShadow = true;
-      
-      const dir = new THREE.Vector3( faceCenter[0], faceCenter[1], faceCenter[2]).normalize();
-      //letter3d.lookAt( dir );
+      letter3d.position.set(
+        sc * faceCenter[0] + dx,
+        sc * faceCenter[1] + dy,
+        sc * faceCenter[2] + dz
+      );
+
+      const faceNormal = new THREE.Vector3(
+        faceCenter[0],
+        faceCenter[1],
+        faceCenter[2]
+      ).normalize();
+
+      //letter3d.quaternion.setFromUnitVectors(UP, faceNormal);
+
 
       group.add(letter3d);
     }
 
+    const sc2 = sc*1.3;
+    polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
+
+
+    group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
+
     return group;
   }
-
 }

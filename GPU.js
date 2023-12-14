@@ -30,7 +30,7 @@ class GPU {
 
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.needsUpdate = true;
-      renderer.shadowMap.type = THREE.PCFShadowMap; //THREE.VSMShadowMap;  //THREE.PCFSoftShadowMap //
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap; //THREE.VSMShadowMap; //THREE.PCFShadowMap; //THREE.VSMShadowMap;  //THREE.PCFSoftShadowMap //
 
       canvas.appendChild(renderer.domElement);
       this.canvas = canvas;
@@ -45,15 +45,19 @@ class GPU {
       this.controls.maxDistance = 10000;
       this.controls.zoomSpeed = 1;
 
-      this.mainLight = new THREE.DirectionalLight(0xFFFFFF, .8)
-      this.mainLight.position.set(1,1,0).normalize();
-      this.setShadow(this.mainLight)
-      this.scene.add(this.mainLight)
 
-      this.cameraLight = new THREE.PointLight(0xFFFF00,.8)
-      this.setShadow(this.cameraLight)
-      this.camera.add(this.cameraLight)
+      //this light is set at an offset from the camera position in render()
+      this.pointLight01 = new THREE.PointLight(0xFFFFFF,.8);
+      this.setShadow(this.pointLight01);
+      this.scene.add(this.pointLight01);
+
+            
+      this.ambientLight =  new THREE.AmbientLight(0xFFFFF0,.4);
+      this.scene.add(this.ambientLight);
+
       this.scene.add(this.camera)
+
+      //this.scene.add( new THREE.CameraHelper( this.cameraLight.shadow.camera ) );
 
       return this;
 
@@ -73,18 +77,30 @@ class GPU {
 
     setShadow(light) {
       light.castShadow = true;
-      light.shadow.mapSize.width = 1024;
+      light.shadow.mapSize.width = 2048;
       light.shadow.mapSize.height = 1024;
       light.shadow.camera.near = 0.1;
-      light.shadow.camera.far = 1000;
-    
+      light.shadow.camera.far = 5000;
+      light.shadow.bias = 1e-4;
       //have to set the range of the orthographic shadow camera
       //to cover the whole plane we are casting shadows onto
       //the shadows get fuzzier if these limits are much greater than the scene
-      light.shadow.camera.left = -1000;
-      light.shadow.camera.bottom = -1000;
-      light.shadow.camera.right = 1000;
-      light.shadow.camera.top = 1000;
+      light.shadow.camera.left = -5000;
+      light.shadow.camera.bottom = -5000;
+      light.shadow.camera.right = 5000;
+      light.shadow.camera.top = 5000;
+    }
+
+    wpos = new THREE.Vector3();
+
+    adjustCamLight() {
+      
+      //negate x and y of camera pos so we always see point light shadow in the main view
+      this.camera.getWorldPosition(this.wpos);
+      this.wpos.x *= 1;
+      this.wpos.y *= 1;
+      this.wpos.z *= .8;
+      this.pointLight01.position.copy(this.wpos);
     }
 
     render(groups) {
@@ -112,6 +128,8 @@ class GPU {
         prevRenderTime = currentRenderTime - (elapsed % fpsInterval);
         time *= 0.001; //convert from milliseconds to seconds
   
+        this.adjustCamLight();
+
         //console.log(this.scene);
         this.renderer.render(this.scene, this.camera);
       }
