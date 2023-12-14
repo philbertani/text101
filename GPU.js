@@ -111,7 +111,7 @@ class GPU {
       //console.log("render",this.scene);
 
       let prevRenderTime = Date.now();
-      const fps = 20;
+      const fps = 30;
       const fpsInterval = 1000 / fps;
       requestAnimationFrame(renderLoop.bind(this));
   
@@ -128,6 +128,12 @@ class GPU {
         prevRenderTime = currentRenderTime - (elapsed % fpsInterval);
         time *= 0.001; //convert from milliseconds to seconds
   
+        
+        for (const group of groups) {
+          //console.log(group);
+          group.traverse(x=>{ if (x.userData.type==="letter") x.rotation.z += .04 });
+        }
+        
         this.adjustCamLight();
 
         //console.log(this.scene);

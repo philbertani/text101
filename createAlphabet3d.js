@@ -30,6 +30,40 @@ export class createAlphabet3d {
     return this.letters3d;
   }
 
+  centerObject(geo) {
+
+    //center a bunch of vertices by subtracting off the barycenter  
+    //so we can rotate them properly later on
+
+    geo.computeBoundingBox();
+
+    const bb = geo.boundingBox;
+    const [dx, dy, dz] = 
+      [
+        .5 * (bb.max.x - bb.min.x),
+        .5 * (bb.max.y - bb.min.y),
+        .5 * (bb.max.z - bb.min.z)
+      ];
+    
+    const pos= geo.getAttribute("position");
+    let coords = pos.array;
+    let sum=[0,0,0]; //x,y,z ok?
+    for (let i=0; i< coords.length-pos.itemSize ; i+=pos.itemSize) {
+      const [x,y,z] = [coords[i],coords[i+1],coords[i+2]];    
+      sum[0]+=x; sum[1]+=y; sum[2]+=z;
+    }
+
+    sum[0]/=pos.count;sum[1]/=pos.count;sum[2]/=pos.count;
+    for (let i=0; i< coords.length-2; i+=pos.itemSize) {
+      coords[i] -= dx; //sum[0];
+      coords[i+1] -= dy; //sum[1];
+      coords[i+2] -= dz; //sum[2];
+    }
+    const posAttrib = new THREE.BufferAttribute(coords,3);
+    geo.setAttribute("position", posAttrib);
+
+  }
+
   create3dLetter(letter) {
 
     //console.log('createing 3d model for:',letter);
@@ -53,7 +87,11 @@ export class createAlphabet3d {
       shininess: 100,
     });
   
+    this.centerObject(textGeo);
+
     const textMesh = new THREE.Mesh(textGeo, material);
+
+    textMesh.geometry.attributes.position.needsUpdate = true;
 
     //a bunch of boxes is centered - the letters are not
     //center them after cloning

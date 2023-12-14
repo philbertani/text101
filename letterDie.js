@@ -4,7 +4,8 @@ export class letterDie {
   constructor(app, polyhedron) {
     this.app = app;
     console.log("zzzzzzzzzzz", app);
-    return this.pasteLettersOnPolyhedron(polyhedron);
+    this.group = this.pasteLettersOnPolyhedron(polyhedron);
+    return this;
   }
 
   chooseLetter() {
@@ -42,15 +43,8 @@ export class letterDie {
       //console.log("xxxxxxx", letter);
 
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
-      letter3d.geometry.computeBoundingBox();
-      const bb = letter3d.geometry.boundingBox;
-      const [dx, dy, dz] =
-        [
-          -0.5 * (bb.max.x - bb.min.x),
-          -0.5 * (bb.max.y - bb.min.y),
-          -0.5 * (bb.max.z - bb.min.z)
-        ];
-      
+
+      const [dx, dy, dz] = [0,0,0];
 
       letter3d.position.set(
         sc * faceCenter[0] + dx,
@@ -64,15 +58,14 @@ export class letterDie {
         faceCenter[2]
       ).normalize();
 
+      letter3d.name = letter;
       //letter3d.quaternion.setFromUnitVectors(UP, faceNormal);
-
-
+      letter3d.userData = {name: letter, type:"letter"};
       group.add(letter3d);
     }
 
     const sc2 = sc*1.3;
     polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
-
 
     group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
 

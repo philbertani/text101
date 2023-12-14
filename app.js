@@ -40,12 +40,13 @@ class App {
     //const group1 = textScene(this.gpu.scene,this.font3d);
     const letterDie1 = new letterDie(this,this.d6 );
 
-    scene.add( letterDie1 );
+    scene.add( letterDie1.group );
+
+    //add shadows to everything here at once
     scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} console.log(x)});
 
-
     //now we can be sure everything has loaded before we kick off the render
-    this.gpu.render();
+    this.gpu.render([letterDie1.group]);
   }
 }
 
