@@ -1,6 +1,10 @@
 import * as THREE from "three";
 
 export class letterDie {
+
+  //the letters start out facing the positive z direction
+  UP = new THREE.Vector3(0, 0, 1);
+
   constructor(app, polyhedron) {
     this.app = app;
     console.log("zzzzzzzzzzz", app);
@@ -32,14 +36,13 @@ export class letterDie {
     const { faceCenters } = polyhedron;
     const { alphabet3d } = this.app;
 
-    const UP = new THREE.Vector3(0, 1, 0);
-
+   
     const sc = 150;  //scale factor
     //watch out material needs to be cloned separately
     const newLetter = this.nextLetter(0);
     for (let i = 0; i < faceCenters.length; i++) {
       const faceCenter = faceCenters[i];
-      const letter = newLetter.next().value;
+      const letter = this.chooseLetter(); //newLetter.next().value;
       //console.log("xxxxxxx", letter);
 
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
@@ -59,16 +62,20 @@ export class letterDie {
       ).normalize();
 
       letter3d.name = letter;
-      //letter3d.quaternion.setFromUnitVectors(UP, faceNormal);
+      letter3d.quaternion.setFromUnitVectors(this.UP, faceNormal);
+      
       letter3d.userData = {name: letter, type:"letter"};
+
       group.add(letter3d);
+
     }
 
-    const sc2 = sc*1.3;
-    polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
-
-    group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
-
+    if ( polyhedron.baseModel) {
+      const sc2 = sc*1.3;
+      polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
+      group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
+    }
+    
     return group;
   }
 }

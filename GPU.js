@@ -131,7 +131,7 @@ class GPU {
         
         for (const group of groups) {
           //console.log(group);
-          group.traverse(x=>{ if (x.userData.type==="letter") x.rotation.z += .04 });
+          //group.traverse(x=>{ if (x.userData.type==="letter") x.rotation.x += .04 });
         }
         
         this.adjustCamLight();

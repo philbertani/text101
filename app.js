@@ -1,5 +1,5 @@
+import * as THREE from "three";
 import GPU from "./GPU";
-import { textScene } from "./textScene.js";
 import { d12 } from "./d12.js";
 import { d6 } from "./d6.js";
 import { loadFont } from "./loadFont.js";
@@ -38,10 +38,16 @@ class App {
     this.alphabet3d = new createAlphabet3d(this);  //send the app reference 
 
     //const group1 = textScene(this.gpu.scene,this.font3d);
-    const letterDie1 = new letterDie(this,this.d6 );
+    const letterDie1 = new letterDie(this,this.d12 );
 
     scene.add( letterDie1.group );
 
+    const testD12 = new THREE.Mesh(new THREE.SphereGeometry(1), new THREE.MeshPhongMaterial({color:"black", transparent:true, opacity:.6}));
+    const sf = 210;
+    testD12.geometry.scale(sf,sf,sf);
+    testD12.rotation.x = Math.PI/6;
+
+    scene.add(testD12);
     //add shadows to everything here at once
     scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} console.log(x)});
 

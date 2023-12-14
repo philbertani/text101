@@ -1,4 +1,5 @@
 import { GeometryStuff } from "./GeometryStuff";
+import * as THREE from "three";
 
 //an amazing reference for computing stuff for d12 is:
 //https://math.stackexchange.com/questions/2538897/equations-of-facelets-of-dodecahedron
@@ -51,6 +52,10 @@ export class d12 extends GeometryStuff {
   constructor() {
     super();
     this.computeFaceCenters();  
+
+    //this.baseModel = new THREE.Mesh(new THREE.DodecahedronGeometry(1), new THREE.MeshPhongMaterial());
+    //this.baseModel.rotation.x = Math.PI/6;
+    //this.baseModel.rotation.z = Math.PI/3;
   }
 
 }
