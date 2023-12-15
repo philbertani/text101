@@ -43,11 +43,15 @@ class App {
     //letterDie1.group.children.forEach(x=>scene.add(x));
     scene.add( letterDie1.group );
 
+    const letterDie2 = new letterDie(this,this.d6);
+    letterDie2.group.position.set(500,0,0);
+    scene.add( letterDie2.group);
+
     //add shadows to everything here at once
     scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} });
 
     //now we can be sure everything has loaded before we kick off the render
-    this.gpu.render([letterDie1.group]);
+    this.gpu.render([letterDie1.group, letterDie2.group]);
   }
 }
 

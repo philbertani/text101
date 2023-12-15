@@ -57,11 +57,14 @@ export class d12 extends GeometryStuff {
       new THREE.SphereGeometry(1),
       new THREE.MeshPhongMaterial({
         color: "purple",
-      //  transparent: true,
-      //  opacity: 0.6,
+        transparent: true,
+        opacity: 0.8,
+        emissive: "rgba(50,0,50,.1)"
       })
     );
     
+    const sf = 1.1;
+    this.baseModel.geometry.scale(sf,sf,sf);
   }
 
 }

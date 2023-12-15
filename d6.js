@@ -29,7 +29,15 @@ export class d6 extends GeometryStuff {
   constructor() {
     super();
     this.computeFaceCenters(); 
-    this.baseModel = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), new THREE.MeshPhongMaterial());
+    this.baseModel = new THREE.Mesh(
+      new THREE.BoxGeometry(1, 1, 1),
+      new THREE.MeshPhongMaterial({
+        color: "blue"
+      })
+    );
+
+    const sf = 1.2;
+    this.baseModel.geometry.scale(sf,sf,sf);
      
   }
 }

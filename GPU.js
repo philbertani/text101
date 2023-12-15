@@ -49,7 +49,7 @@ class GPU {
 
       //set a point light at the camera
       //having to set decay to 0 for reasons I do not understand
-      this.camLight = new THREE.PointLight(0xFFFFFF,1,0,0);
+      this.camLight = new THREE.PointLight(0xFFFFFF,1.2,0,.1);
       this.setShadow(this.camLight);
       this.scene.add(this.camLight);
 
@@ -61,6 +61,8 @@ class GPU {
 
       this.scene.add(this.camera)
 
+      this.ambient = new THREE.AmbientLight(0x00FFFF,.1);
+      this.scene.add(this.ambient);
       //this.scene.add( new THREE.CameraHelper( this.cameraLight.shadow.camera ) );
 
       return this;
