@@ -53,7 +53,14 @@ export class d12 extends GeometryStuff {
     super();
     this.computeFaceCenters();  
 
-    this.baseModel = new THREE.Mesh(new THREE.SphereGeometry(1), new THREE.MeshPhongMaterial({color:"purple", transparent:true, opacity:.6}));
+    this.baseModel = new THREE.Mesh(
+      new THREE.SphereGeometry(1),
+      new THREE.MeshPhongMaterial({
+        color: "purple",
+      //  transparent: true,
+      //  opacity: 0.6,
+      })
+    );
     
   }
 

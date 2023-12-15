@@ -78,7 +78,6 @@ export function SelectiveBloom(GPU, groups) {
 
     }
 
-
   }
 
   function restoreMaterial( obj ) {
@@ -99,11 +98,11 @@ export function SelectiveBloom(GPU, groups) {
   
     raycaster.setFromCamera( mouse, camera );
 
-    console.log(groups[0].children);
+    //console.log(groups[0].children);
 
     const intersects = raycaster.intersectObjects( scene.children, true );
 
-    console.log(intersects);
+    //console.log(intersects);
 
     if ( intersects.length > 0 ) {
   

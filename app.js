@@ -44,7 +44,7 @@ class App {
     scene.add( letterDie1.group );
 
     //add shadows to everything here at once
-    //scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} });
+    scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} });
 
     //now we can be sure everything has loaded before we kick off the render
     this.gpu.render([letterDie1.group]);

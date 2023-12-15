@@ -12,6 +12,7 @@ class GPU {
     canvas = null;
     resized = false;
     controls = {};
+    wpos = new THREE.Vector3();
   
     constructor(canvas) {
 
@@ -46,14 +47,17 @@ class GPU {
       this.controls.maxDistance = 10000;
       this.controls.zoomSpeed = 1;
 
+      //set a point light at the camera
+      //having to set decay to 0 for reasons I do not understand
+      this.camLight = new THREE.PointLight(0xFFFFFF,1,0,0);
+      this.setShadow(this.camLight);
+      this.scene.add(this.camLight);
 
-      //this light is set at an offset from the camera position in render()
-      this.pointLight01 = new THREE.PointLight(0xFFFFFF,.8);
-      this.setShadow(this.pointLight01);
-      this.scene.add(this.pointLight01);
-   
-      this.ambientLight =  new THREE.AmbientLight(0xFFFFF0,.4);
-      this.scene.add(this.ambientLight);
+      //camera helpers and such
+      //this.scene.add( new THREE.CameraHelper( this.pointLight02.shadow.camera ) );
+      //const sphereSize = 300;
+      //const pointLightHelper = new THREE.PointLightHelper( this.camLight, sphereSize );
+      //this.scene.add( pointLightHelper );
 
       this.scene.add(this.camera)
 
@@ -80,27 +84,25 @@ class GPU {
       light.shadow.mapSize.width = 2048;
       light.shadow.mapSize.height = 1024;
       light.shadow.camera.near = 0.1;
-      light.shadow.camera.far = 5000;
-      light.shadow.bias = 1e-4;
+      light.shadow.camera.far = 1000;
+      //light.shadow.bias = 1e-4;
       //have to set the range of the orthographic shadow camera
       //to cover the whole plane we are casting shadows onto
       //the shadows get fuzzier if these limits are much greater than the scene
-      light.shadow.camera.left = -5000;
-      light.shadow.camera.bottom = -5000;
-      light.shadow.camera.right = 5000;
-      light.shadow.camera.top = 5000;
+      light.shadow.camera.left = -1000;
+      light.shadow.camera.bottom = -1000;
+      light.shadow.camera.right = 1000;
+      light.shadow.camera.top = 1000;
     }
 
-    wpos = new THREE.Vector3();
-
-    adjustCamLight() {
+    adjustCamLight(light) {
       
       //negate x and y of camera pos so we always see point light shadow in the main view
       this.camera.getWorldPosition(this.wpos);
       this.wpos.x *= 1;
       this.wpos.y *= 1;
-      this.wpos.z *= .8;
-      this.pointLight01.position.copy(this.wpos);
+      this.wpos.z *= .7;
+      light.position.copy(this.wpos);
     }
 
     render(groups) {
@@ -110,7 +112,6 @@ class GPU {
 
       //console.log("render",this.scene);
 
-
       //get the THREE js object that will be the rendering master in the animation loop
       //instead of just this.renderer.render() we will have this.composer.render()
       //which will do multiple buffer passes and postprocessing
@@ -118,38 +119,35 @@ class GPU {
       //GraphicsPipeline needs access to the final this.scene in order
       //to set mesh.layers information
 
-      /*
+      //SelectiveBloom(this, groups);
+
       this.composer = GraphicsPipeline(this);
 
       let prevRenderTime = Date.now();
       const fps = 30;
       const fpsInterval = 1000 / fps;
       requestAnimationFrame(renderLoop.bind(this));
-      */
-
-      SelectiveBloom(this, groups);
-      
+    
 
       function renderLoop(time) {
         requestAnimationFrame(renderLoop.bind(this));
   
         //console.log(time);
         //throttle the fps because without it just maxes
-        //out the GPU for no good reason, for example it will
-        //redisplay the same scene at 240 fps on this computer
+        //out the GPU for no good reason, for example it will try to
+        //redisplay the same scene at 240 fps on an alienware r17
         const currentRenderTime = Date.now();
         const elapsed = currentRenderTime - prevRenderTime;
         if (elapsed < fpsInterval) return;
         prevRenderTime = currentRenderTime - (elapsed % fpsInterval);
         time *= 0.001; //convert from milliseconds to seconds
   
-        
-        for (const group of groups) {
+        //for (const group of groups) {
           //console.log(group);
           //group.traverse(x=>{ if (x.userData.type==="letter") x.rotation.x += .04 });
-        }
+        //}
         
-        this.adjustCamLight();
+        this.adjustCamLight(this.camLight);
 
         //console.log(this.scene);
         //this.renderer.render(this.scene, this.camera);

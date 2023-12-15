@@ -91,7 +91,7 @@ export class createAlphabet3d {
 
     const textMesh = new THREE.Mesh(textGeo, material);
 
-    textMesh.geometry.attributes.position.needsUpdate = true;
+    //textMesh.geometry.attributes.position.needsUpdate = true;
 
     //a bunch of boxes is centered - the letters are not
     //center them after cloning
