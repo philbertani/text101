@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
+import { GraphicsPipeline } from "./GraphicsPipeline";
+import { SelectiveBloom } from "./SelectiveBloom";
 
 //all threejs renderer initialization and lighting setup go in here
 
@@ -50,8 +51,7 @@ class GPU {
       this.pointLight01 = new THREE.PointLight(0xFFFFFF,.8);
       this.setShadow(this.pointLight01);
       this.scene.add(this.pointLight01);
-
-            
+   
       this.ambientLight =  new THREE.AmbientLight(0xFFFFF0,.4);
       this.scene.add(this.ambientLight);
 
@@ -110,11 +110,26 @@ class GPU {
 
       //console.log("render",this.scene);
 
+
+      //get the THREE js object that will be the rendering master in the animation loop
+      //instead of just this.renderer.render() we will have this.composer.render()
+      //which will do multiple buffer passes and postprocessing
+
+      //GraphicsPipeline needs access to the final this.scene in order
+      //to set mesh.layers information
+
+      /*
+      this.composer = GraphicsPipeline(this);
+
       let prevRenderTime = Date.now();
       const fps = 30;
       const fpsInterval = 1000 / fps;
       requestAnimationFrame(renderLoop.bind(this));
-  
+      */
+
+      SelectiveBloom(this, groups);
+      
+
       function renderLoop(time) {
         requestAnimationFrame(renderLoop.bind(this));
   
@@ -137,7 +152,9 @@ class GPU {
         this.adjustCamLight();
 
         //console.log(this.scene);
-        this.renderer.render(this.scene, this.camera);
+        //this.renderer.render(this.scene, this.camera);
+        this.composer.render();
+
       }
 
       return this;

@@ -40,16 +40,11 @@ class App {
     //const group1 = textScene(this.gpu.scene,this.font3d);
     const letterDie1 = new letterDie(this,this.d12 );
 
+    //letterDie1.group.children.forEach(x=>scene.add(x));
     scene.add( letterDie1.group );
 
-    const testD12 = new THREE.Mesh(new THREE.SphereGeometry(1), new THREE.MeshPhongMaterial({color:"black", transparent:true, opacity:.6}));
-    const sf = 210;
-    testD12.geometry.scale(sf,sf,sf);
-    testD12.rotation.x = Math.PI/6;
-
-    scene.add(testD12);
     //add shadows to everything here at once
-    scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} console.log(x)});
+    //scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} });
 
     //now we can be sure everything has loaded before we kick off the render
     this.gpu.render([letterDie1.group]);

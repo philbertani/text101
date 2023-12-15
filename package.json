@@ -13,7 +13,7 @@
   "author": "Philip Bertani",
   "license": "ISC",
   "dependencies": {
-    "three": "latest"
+    "three": "0.159.0"
   },
   "devDependencies": {
     "@webpack-cli/generators": "latest"

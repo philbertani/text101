@@ -53,9 +53,8 @@ export class d12 extends GeometryStuff {
     super();
     this.computeFaceCenters();  
 
-    //this.baseModel = new THREE.Mesh(new THREE.DodecahedronGeometry(1), new THREE.MeshPhongMaterial());
-    //this.baseModel.rotation.x = Math.PI/6;
-    //this.baseModel.rotation.z = Math.PI/3;
+    this.baseModel = new THREE.Mesh(new THREE.SphereGeometry(1), new THREE.MeshPhongMaterial({color:"purple", transparent:true, opacity:.6}));
+    
   }
 
 }
