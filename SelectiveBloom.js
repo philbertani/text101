@@ -100,7 +100,7 @@ export function SelectiveBloom(GPU, groups) {
 
     //console.log(groups[0].children);
 
-    const intersects = raycaster.intersectObjects( scene.children, true );
+    const intersects = raycaster.intersectObjects( scene.children, false );
 
     //console.log(intersects);
 

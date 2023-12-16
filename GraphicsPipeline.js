@@ -25,10 +25,16 @@ export function GraphicsPipeline(GPU) {
   bloomPass.radius = params.radius;
 
   const outputPass = new OutputPass();
+ 
+
+  scene.background = null;
 
   const composer = new EffectComposer( renderer );
   composer.addPass( renderScene );
   composer.addPass( bloomPass );
+
+  //scene.background = GPU.app.envMap.text01;
+
   composer.addPass( outputPass );
 
   return composer;

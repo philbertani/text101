@@ -83,9 +83,11 @@ export class createAlphabet3d {
 
 
     const material = new THREE.MeshPhongMaterial({
-      color: "black", //"rgb(120,100,0)",
-      shininess: 100,
-      emissive: "rgba(100,100,0,1)"
+      color: "rgb(250,150,50)",
+      shininess: 0,
+      //map: this.app.envMap.textureEquirec
+      //envMap: this.app.envMap.text01,
+      //emissive: "rgba(200,200,0,1)"
     });
   
     this.centerObject(textGeo);

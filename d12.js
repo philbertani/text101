@@ -51,19 +51,25 @@ export class d12 extends GeometryStuff {
 
   N = 5;  //number of vertices in one face
   D = 3;  //number of dimensions
-  constructor() {
+  constructor(app) {
+
     super();
+
+    this.app = app;
     this.computeFaceCenters();  
 
     this.baseModel = new THREE.Mesh(
       //new THREE.SphereGeometry(1),
       new THREE.DodecahedronGeometry(1),
       new THREE.MeshPhongMaterial({
-        color: "rgb(50,50,200)",
+        color: "rgb(100,100,250)",  //white makes texture show up with its original colors
         shininess: 200,
+        //map: this.app.envMap.text01
+        envMap: this.app.envMap.text01
       })
     );
 
+    /*
     this.outerShell = new THREE.Mesh(
       //new THREE.SphereGeometry(1),
       new THREE.DodecahedronGeometry(1),
@@ -74,14 +80,15 @@ export class d12 extends GeometryStuff {
         emissive: "rgba(0,0,200,1)"
       })
     );
-    
-    const sf = 1.2;
+    */
+
+    const sf = 1.3;
     this.baseModel.geometry.scale(sf,sf,sf);
     this.baseModel.rotation.x = Math.PI/2;
 
-    const sf2 = 1.3;
-    this.outerShell.rotation.x = Math.PI/2;
-    this.outerShell.geometry.scale(sf2,sf2,sf2);
+    //const sf2 = 1.3;
+    //this.outerShell.rotation.x = Math.PI/2;
+    //this.outerShell.geometry.scale(sf2,sf2,sf2);
 
   }
 

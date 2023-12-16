@@ -49,9 +49,10 @@ class GPU {
 
       //set a point light at the camera
       //having to set decay to 0 for reasons I do not understand
-      this.camLight = new THREE.PointLight(0xFFFFFF,1.5,0,.1);
+      this.camLight = new THREE.PointLight(0xFFFFF0,2,0,0);
       this.setShadow(this.camLight);
       this.scene.add(this.camLight);
+
 
       //camera helpers and such
       //this.scene.add( new THREE.CameraHelper( this.pointLight02.shadow.camera ) );
@@ -61,7 +62,7 @@ class GPU {
 
       this.scene.add(this.camera)
 
-      this.ambient = new THREE.AmbientLight(0x00FFFF,.1);
+      this.ambient = new THREE.AmbientLight(0xFFFFFF,.4);
       this.scene.add(this.ambient);
       //this.scene.add( new THREE.CameraHelper( this.cameraLight.shadow.camera ) );
 
@@ -101,18 +102,19 @@ class GPU {
       
       //negate x and y of camera pos so we always see point light shadow in the main view
       this.camera.getWorldPosition(this.wpos);
-      this.wpos.x *= 1;
-      this.wpos.y *= 1;
-      this.wpos.z *= .5;
+      this.wpos.x *= 1.2;
+      this.wpos.y *= 1.2;
+      this.wpos.z *= .7;
       light.position.copy(this.wpos);
     }
 
-    render(groups) {
+    render(app) {
   
+      this.app = app;
       //groups is an array of threejs groups or objects
       //whose parameters we will animate
 
-      //console.log("render",this.scene);
+      console.log("render",this.scene);
 
       //get the THREE js object that will be the rendering master in the animation loop
       //instead of just this.renderer.render() we will have this.composer.render()
@@ -122,14 +124,14 @@ class GPU {
       //to set mesh.layers information
 
       //SelectiveBloom(this, groups);
-
-      this.composer = GraphicsPipeline(this);
+      
+      //this.composer = GraphicsPipeline(this);
 
       let prevRenderTime = Date.now();
       const fps = 30;
       const fpsInterval = 1000 / fps;
       requestAnimationFrame(renderLoop.bind(this));
-    
+      
 
       function renderLoop(time) {
         requestAnimationFrame(renderLoop.bind(this));
@@ -144,16 +146,18 @@ class GPU {
         prevRenderTime = currentRenderTime - (elapsed % fpsInterval);
         time *= 0.001; //convert from milliseconds to seconds
   
-        //for (const group of groups) {
+        for (const group of this.app.groups) {
           //console.log(group);
           //group.traverse(x=>{ if (x.userData.type==="letter") x.rotation.x += .04 });
-        //}
+
+          group.rotation.y += .01
+        }
         
         this.adjustCamLight(this.camLight);
 
         //console.log(this.scene);
-        //this.renderer.render(this.scene, this.camera);
-        this.composer.render();
+        this.renderer.render(this.scene, this.camera);
+        //this.composer.render();
 
       }
 

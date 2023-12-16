@@ -6,6 +6,7 @@ import { loadFont } from "./loadFont.js";
 import { alphabetData } from "./alphabetData.js";
 import { createAlphabet3d } from "./createAlphabet3d.js";
 import { letterDie} from "./letterDie.js";
+import { loadTextures } from "./loadTextures.js";
 
 class App {
 
@@ -16,9 +17,9 @@ class App {
     this.canvas = document.getElementById("canvas");
     this.gpu = new GPU(this.canvas);
 
-    this.d12 = new d12();
-    this.d6 = new d6();
-    this.typeFace = "helvetiker_regular.typeface.json";
+    //this.typeFace = "helvetiker_regular.typeface.json";
+    //this.typeFace = "optimer_regular.typeface.json";
+    this.typeFace = "gentilis_regular.typeface.json";
     this.alphabetData = new alphabetData();
     this.letters = this.alphabetData.get("ENGLISH");
 
@@ -35,23 +36,37 @@ class App {
     //use promises if a func is loading stuff from urls/filesytem
     this.font = await loadFont(this.typeFace);
 
+    this.envMap = {};
+    this.envMap.text01 = await loadTextures( 'text01.png' );
+    ///this.envMap.text01.wrapS = THREE.RepeatWrapping;
+    //this.envMap.text01.wrapT = THREE.RepeatWrapping;
+    this.envMap.text01.colorSpace = THREE.SRGBColorSpace;
+
+    //this.envMap.text01.repeat.set( 12,12 );
+    this.envMap.text01.mapping = THREE.EquirectangularReflectionMapping;
+
+    //cube map works best, take six images 
+    scene.background = this.envMap.text01;
+
+    this.d12 = new d12(this);
+    this.d6 = new d6(this);
+
     this.alphabet3d = new createAlphabet3d(this);  //send the app reference 
 
-    //const group1 = textScene(this.gpu.scene,this.font3d);
     const letterDie1 = new letterDie(this,this.d12 );
 
-    //letterDie1.group.children.forEach(x=>scene.add(x));
     scene.add( letterDie1.group );
 
     const letterDie2 = new letterDie(this,this.d6);
-    letterDie2.group.position.set(500,0,0);
+    letterDie2.group.position.set(800,0,0);
     scene.add( letterDie2.group);
 
     //add shadows to everything here at once
     scene.traverse(x=>{if (x.isMesh) {x.castShadow=true;x.receiveShadow=true;} });
 
+    this.groups = [letterDie1.group,letterDie2.group]
     //now we can be sure everything has loaded before we kick off the render
-    this.gpu.render([letterDie1.group]);
+    this.gpu.render(this);
   }
 }
 

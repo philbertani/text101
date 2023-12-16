@@ -34,11 +34,12 @@ export class d6 extends GeometryStuff {
     this.baseModel = new THREE.Mesh(
       new THREE.BoxGeometry(1, 1, 1),
       new THREE.MeshPhongMaterial({
-        color: "blue"
+        color: "rgb(50,50,200)",
+        shininess: 200
       })
     );
 
-    const sf = 1.2;
+    const sf = 1.5;
     this.baseModel.geometry.scale(sf,sf,sf);
      
   }
