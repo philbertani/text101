@@ -38,7 +38,7 @@ class App {
     this.font = await loadFont(this.typeFace);
 
     this.envMap = {};
-    this.envMap.text01 = await loadTextures( 'text01.png' );
+    this.envMap.text01 = await loadTextures( 'webb01.jpg' );
     ///this.envMap.text01.wrapS = THREE.RepeatWrapping;
     //this.envMap.text01.wrapT = THREE.RepeatWrapping;
     this.envMap.text01.colorSpace = THREE.SRGBColorSpace;
@@ -50,6 +50,7 @@ class App {
     //cube map works best, take six images 
 
     console.log("cubeMap",this.envMap.cubeMap01);
+
     scene.background = this.envMap.cubeMap01;
 
     this.d12 = new d12(this);
