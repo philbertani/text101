@@ -28,14 +28,18 @@ export class d6 extends GeometryStuff {
 
   N = 4;  //number of vertices in one face
   D = 3;  //number of dimensions
-  constructor() {
+  constructor(app) {
     super();
+
+    this.app=app;
     this.computeFaceCenters(); 
     this.baseModel = new THREE.Mesh(
       new THREE.BoxGeometry(1, 1, 1),
       new THREE.MeshPhongMaterial({
-        color: "rgb(50,50,200)",
-        shininess: 200
+        color: "rgb(255,255,100)",
+        shininess: 200,
+        envMap: this.app.envMap.cubeMap01,
+        emissive: "rgb(100,70,10)"
       })
     );
 

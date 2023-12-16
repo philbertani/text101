@@ -125,7 +125,7 @@ class GPU {
 
       //SelectiveBloom(this, groups);
       
-      //this.composer = GraphicsPipeline(this);
+      this.composer = GraphicsPipeline(this);
 
       let prevRenderTime = Date.now();
       const fps = 30;
@@ -156,8 +156,8 @@ class GPU {
         this.adjustCamLight(this.camLight);
 
         //console.log(this.scene);
-        this.renderer.render(this.scene, this.camera);
-        //this.composer.render();
+        //this.renderer.render(this.scene, this.camera);
+        this.composer.render();
 
       }
 

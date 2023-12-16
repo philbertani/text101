@@ -7,6 +7,7 @@ import { alphabetData } from "./alphabetData.js";
 import { createAlphabet3d } from "./createAlphabet3d.js";
 import { letterDie} from "./letterDie.js";
 import { loadTextures } from "./loadTextures.js";
+import { loadCubeMap} from "./loadCubeMap.js";
 
 class App {
 
@@ -45,8 +46,11 @@ class App {
     //this.envMap.text01.repeat.set( 12,12 );
     this.envMap.text01.mapping = THREE.EquirectangularReflectionMapping;
 
+    this.envMap.cubeMap01 = await loadCubeMap(['px.png','nx.png','py.png','ny.png','pz.png','nz.png']);
     //cube map works best, take six images 
-    scene.background = this.envMap.text01;
+
+    console.log("cubeMap",this.envMap.cubeMap01);
+    scene.background = this.envMap.cubeMap01;
 
     this.d12 = new d12(this);
     this.d6 = new d6(this);
@@ -58,7 +62,7 @@ class App {
     scene.add( letterDie1.group );
 
     const letterDie2 = new letterDie(this,this.d6);
-    letterDie2.group.position.set(800,0,0);
+    letterDie2.group.position.set(500,0,0);
     scene.add( letterDie2.group);
 
     //add shadows to everything here at once

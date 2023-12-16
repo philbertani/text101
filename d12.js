@@ -62,10 +62,12 @@ export class d12 extends GeometryStuff {
       //new THREE.SphereGeometry(1),
       new THREE.DodecahedronGeometry(1),
       new THREE.MeshPhongMaterial({
-        color: "rgb(100,100,250)",  //white makes texture show up with its original colors
+        color: "rgb(150,150,250)",  //white makes texture show up with its original colors
         shininess: 200,
         //map: this.app.envMap.text01
-        envMap: this.app.envMap.text01
+        envMap: this.app.envMap.cubeMap01,
+        emissive: "rgb(0,0,100)"
+        
       })
     );
 

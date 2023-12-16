@@ -9,7 +9,7 @@ import * as THREE from "three";
 const params = {
   threshold: 0,
   strength: 1.,
-  radius: .1,
+  radius: .4,
   exposure: 1.
 };
 
@@ -27,7 +27,7 @@ export function GraphicsPipeline(GPU) {
   const outputPass = new OutputPass();
  
 
-  scene.background = null;
+  //scene.background = null;
 
   const composer = new EffectComposer( renderer );
   composer.addPass( renderScene );
