@@ -7,6 +7,8 @@ import * as THREE from "three";
 
 export class d12 extends GeometryStuff {
 
+  name = "d12";
+
   //20 vertices
   vertices = [
     [0.618033988749895, 0, 1.6180339887499],
@@ -54,17 +56,21 @@ export class d12 extends GeometryStuff {
     this.computeFaceCenters();  
 
     this.baseModel = new THREE.Mesh(
-      new THREE.SphereGeometry(1),
+      //new THREE.SphereGeometry(1),
+      new THREE.DodecahedronGeometry(1),
       new THREE.MeshPhongMaterial({
         color: "purple",
-        transparent: true,
-        opacity: 0.8,
-        emissive: "rgba(50,0,50,.1)"
+        //transparent: true,
+        //opacity: 0.9,
+        emissive: "rgba(10,0,50,.1)"
       })
     );
     
-    const sf = 1.1;
+    const sf = 1.2;
     this.baseModel.geometry.scale(sf,sf,sf);
+    this.baseModel.rotation.x = Math.PI/2;
+
+
   }
 
 }

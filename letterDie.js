@@ -7,7 +7,6 @@ export class letterDie {
 
   constructor(app, polyhedron) {
     this.app = app;
-    console.log("zzzzzzzzzzz", app);
     this.group = this.pasteLettersOnPolyhedron(polyhedron);
     return this;
   }
@@ -20,7 +19,7 @@ export class letterDie {
   }
 
   *nextLetter(index) {
-    const letters = ["A", "B", "C", "D", "E", "F"];
+    const letters = ["A","B", "C", "D", "E", "F","G"];
     while (index < 1e6) {
       if (index > 5) index = 0;
       yield letters[index];
@@ -36,14 +35,14 @@ export class letterDie {
     const { faceCenters } = polyhedron;
     const { alphabet3d } = this.app;
 
-   
     const sc = 150;  //scale factor
     //watch out material needs to be cloned separately
     const newLetter = this.nextLetter(0);
     for (let i = 0; i < faceCenters.length; i++) {
       const faceCenter = faceCenters[i];
+
       const letter = this.chooseLetter(); //newLetter.next().value;
-      //console.log("xxxxxxx", letter);
+      //const letter = i < 1 ? "A" : "X";
 
       const letter3d = alphabet3d[letter].clone(); //make sure to make a copy
 
@@ -74,6 +73,11 @@ export class letterDie {
       const sc2 = sc*1.3;
       polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
       group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
+
+      //if (polyhedron.name === "d12") {
+      //  polyhedron.baseModel.rotation.x = Math.PI/2; 
+     // }
+
     }
     
     return group;

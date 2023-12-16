@@ -8,9 +8,9 @@ import * as THREE from "three";
 
 const params = {
   threshold: 0,
-  strength: 1,
-  radius: 1,
-  exposure: 1
+  strength: .8,
+  radius: .3,
+  exposure: 1.
 };
 
 export function GraphicsPipeline(GPU) {

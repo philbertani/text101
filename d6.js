@@ -3,6 +3,8 @@ import * as THREE from "three";
 
 export class d6 extends GeometryStuff {
 
+  name = "d6";
+  
   vertices = [
     [1, 1, 1],
     [1, 1, -1],

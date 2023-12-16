@@ -71,8 +71,8 @@ export class createAlphabet3d {
     const {font} = this.app;
     const textGeo = new TextGeometry(letter, {
       font: font,
-      size: 120,
-      height: 80,
+      size: 100,
+      height: 40,
       curveSegments: 10,
       bevelEnabled: false,
       bevelThickness: 10,
