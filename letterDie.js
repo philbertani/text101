@@ -35,7 +35,7 @@ export class letterDie {
     const { faceCenters } = polyhedron;
     const { alphabet3d } = this.app;
 
-    const sc = 150;  //scale factor
+    const sc = 120;  //scale factor
     //watch out material needs to be cloned separately
     const newLetter = this.nextLetter(0);
     for (let i = 0; i < faceCenters.length; i++) {
@@ -70,16 +70,18 @@ export class letterDie {
     }
 
     if ( polyhedron.baseModel) {
-      const sc2 = sc*1.3;
+      const sc2 = sc*1.5;
       polyhedron.baseModel.geometry.scale(sc2,sc2,sc2);
       group.add(polyhedron.baseModel); //add the actual cube or d12 or whatever
-
-      //if (polyhedron.name === "d12") {
-      //  polyhedron.baseModel.rotation.x = Math.PI/2; 
-     // }
-
     }
     
+    if ( polyhedron.outerShell) {
+      const sc2 = sc*1.6;
+      polyhedron.outerShell.geometry.scale(sc2,sc2,sc2);
+      group.add(polyhedron.outerShell); //add the actual cube or d12 or whatever
+    }
+
+
     return group;
   }
 }

@@ -59,10 +59,19 @@ export class d12 extends GeometryStuff {
       //new THREE.SphereGeometry(1),
       new THREE.DodecahedronGeometry(1),
       new THREE.MeshPhongMaterial({
-        color: "purple",
-        //transparent: true,
-        //opacity: 0.9,
-        emissive: "rgba(10,0,50,.1)"
+        color: "rgb(50,50,200)",
+        shininess: 200,
+      })
+    );
+
+    this.outerShell = new THREE.Mesh(
+      //new THREE.SphereGeometry(1),
+      new THREE.DodecahedronGeometry(1),
+      new THREE.MeshPhongMaterial({
+        color: "rgb(0,50,200)",
+        transparent: true,
+        opacity: 0.2,
+        emissive: "rgba(0,0,200,1)"
       })
     );
     
@@ -70,6 +79,9 @@ export class d12 extends GeometryStuff {
     this.baseModel.geometry.scale(sf,sf,sf);
     this.baseModel.rotation.x = Math.PI/2;
 
+    const sf2 = 1.3;
+    this.outerShell.rotation.x = Math.PI/2;
+    this.outerShell.geometry.scale(sf2,sf2,sf2);
 
   }
 

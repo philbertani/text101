@@ -8,8 +8,8 @@ import * as THREE from "three";
 
 const params = {
   threshold: 0,
-  strength: .8,
-  radius: .3,
+  strength: 1.,
+  radius: .1,
   exposure: 1.
 };
 

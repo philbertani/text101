@@ -72,7 +72,7 @@ export class createAlphabet3d {
     const textGeo = new TextGeometry(letter, {
       font: font,
       size: 100,
-      height: 40,
+      height: 80,
       curveSegments: 10,
       bevelEnabled: false,
       bevelThickness: 10,
@@ -83,20 +83,14 @@ export class createAlphabet3d {
 
 
     const material = new THREE.MeshPhongMaterial({
-      color: "rgb(255,200,0)",
+      color: "black", //"rgb(120,100,0)",
       shininess: 100,
-      emissive: "rgba(100,50,10,1)"
+      emissive: "rgba(100,100,0,1)"
     });
   
     this.centerObject(textGeo);
 
     const textMesh = new THREE.Mesh(textGeo, material);
-
-    //textMesh.geometry.attributes.position.needsUpdate = true;
-
-    //a bunch of boxes is centered - the letters are not
-    //center them after cloning
-    //const textMesh = new THREE.Mesh( new THREE.BoxGeometry(100,100,100), material);
 
     return textMesh;
      

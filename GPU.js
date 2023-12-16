@@ -49,7 +49,7 @@ class GPU {
 
       //set a point light at the camera
       //having to set decay to 0 for reasons I do not understand
-      this.camLight = new THREE.PointLight(0xFFFFFF,1.2,0,.1);
+      this.camLight = new THREE.PointLight(0xFFFFFF,1.5,0,.1);
       this.setShadow(this.camLight);
       this.scene.add(this.camLight);
 
@@ -103,7 +103,7 @@ class GPU {
       this.camera.getWorldPosition(this.wpos);
       this.wpos.x *= 1;
       this.wpos.y *= 1;
-      this.wpos.z *= .7;
+      this.wpos.z *= .5;
       light.position.copy(this.wpos);
     }
 
