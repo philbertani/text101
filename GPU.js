@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
 import { GraphicsPipeline } from "./GraphicsPipeline";
 import { SelectiveBloom } from "./SelectiveBloom";
 
@@ -41,11 +42,22 @@ class GPU {
       this.camera.position.set(0,0,500);
       
   
-      //this.controls = new THREE.
+      
+      this.controls = new TrackballControls( this.camera, renderer.domElement );
+
+      this.controls.rotateSpeed = 8.0;
+      this.controls.zoomSpeed = 1.2;
+      this.controls.panSpeed = 0.8;
+
+      this.controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
+
+      /*
+      //orbit controls are annoying and have gimbal lock as well as contrained polar angle
       this.controls = new OrbitControls(this.camera, renderer.domElement);
       this.controls.minDistance = -10000;
       this.controls.maxDistance = 10000;
       this.controls.zoomSpeed = 1;
+      */
 
       //set a point light at the camera
       //having to set decay to 0 for reasons I do not understand
@@ -153,6 +165,8 @@ class GPU {
         }
         
         this.adjustCamLight(this.camLight);
+
+        this.controls.update();
 
         //console.log(this.scene);
         //this.renderer.render(this.scene, this.camera);
