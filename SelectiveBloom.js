@@ -1,4 +1,5 @@
 //all processing, postprocessing, render to textures, etc will get setup in this file
+//this one difficult to get working properly in the context of an animation
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';

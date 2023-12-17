@@ -122,9 +122,6 @@ class GPU {
 
       //GraphicsPipeline needs access to the final this.scene in order
       //to set mesh.layers information
-
-      //SelectiveBloom(this, groups);
-      
       this.composer = GraphicsPipeline(this);
 
       let prevRenderTime = Date.now();
@@ -132,7 +129,9 @@ class GPU {
       const fpsInterval = 1000 / fps;
       requestAnimationFrame(renderLoop.bind(this));
       
-
+      //selectiveBloom does not work in the context of requestAnimation frame yet
+      //SelectiveBloom(this, groups);
+      
       function renderLoop(time) {
         requestAnimationFrame(renderLoop.bind(this));
   

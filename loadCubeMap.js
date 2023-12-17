@@ -4,8 +4,10 @@ import * as THREE from "three";
 //export the whole thing to a glb file so we can forget about the font
 //and just treat them as regular vertex objects
 
-export function loadCubeMap(filenamesArray) {
+export function loadCubeMap(filenamesArray,path=null) {
   const loader = new  THREE.CubeTextureLoader();  //.setPath("")
+
+  if ( path ) loader.setPath(path);
 
   return new Promise((resolve, reject) => {
 
